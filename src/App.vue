@@ -1,20 +1,33 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+
+    <b-container class="bv-example-row">
+    <b-row v-for="(temp, j) in board.board.length" :key="j">
+      <block v-for="(block, idx) in board.board[j]"
+             :key="j + ',' + idx"
+             :block="block"></block>
+    </b-row>
+    </b-container>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+  import Board from "./data/Board"
+  import Block from "./components/Block";
 
-export default {
-  name: 'app',
-  components: {
-    HelloWorld
+  export default {
+    name: 'app',
+    components: {Block},
+    data() {
+      return {
+        board: new Board()
+      }
+    }
   }
-}
 </script>
 
-<style>
+<style lang="scss">
+  @import '~bootstrap/dist/css/bootstrap.css';
+  @import '~bootstrap-vue/dist/bootstrap-vue.css';
+
 </style>
