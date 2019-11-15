@@ -1,8 +1,9 @@
 class Block {
-  constructor(x, y, isMine) {
+  constructor(x, y, isMine, board) {
     this.x = x;
     this.y = y;
     this.isMine = isMine;
+    this.board = board;
     this.nearbyBlocks = [];
     this.nearbyMineCount = 0;
     this.isOpen = false;
@@ -16,7 +17,10 @@ class Block {
   open() {
     this.isOpen = true;
 
-    if (this.nearbyMineCount === 0) {
+    if (this.isMine === true) {
+      this.board.gameover();
+    }
+    else if (this.nearbyMineCount === 0) {
       this.nearbyBlocks.forEach(it => it.open())
     }
   }
@@ -25,7 +29,7 @@ class Block {
     if (this.isOpen === false) return "";
 
     if (this.isMine === true) {
-      return "<span class='mine'>O</span>";
+      return "<span class='mine'><img src='mine.ico' /></span>";
     }
 
     if (this.nearbyMineCount === 0) {

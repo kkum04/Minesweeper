@@ -14,7 +14,7 @@ class Board {
     for(let j = 0; j<board.length; j++) {
       this.board[j] = new Array(board[j].length);
       for(let i = 0; i<board[j].length; i++) {
-        this.board[j][i] = new Block(i, j, board[j][i], [], 0)
+        this.board[j][i] = new Block(i, j, board[j][i], this)
       }
     }
 
@@ -35,7 +35,12 @@ class Board {
         this.board[j][i].setNearbyBlocks(nearbyBlocks);
       }
     }
+  }
 
+  gameover() {
+    this.board.forEach(row =>
+        row.forEach(block => block.isOpen = true)
+    )
   }
 
   range(start, end) {

@@ -32,10 +32,12 @@
     height: 40px;
     border-radius: 0px;
     border: 0px;
+    padding: 4px;
   }
 
-  .mine {
-    color: red;
+  .mine img {
+    width: 100%;
+    height: 100%;
   }
 
   .mine_one {
