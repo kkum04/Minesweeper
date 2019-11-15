@@ -14,21 +14,28 @@ class Board {
     for(let j = 0; j<board.length; j++) {
       this.board[j] = new Array(board[j].length);
       for(let i = 0; i<board[j].length; i++) {
-        const nearbyBlocks = this.range(j-1, j+1)
+        this.board[j][i] = new Block(i, j, board[j][i], [], 0)
+      }
+    }
+
+    for(let j = 0; j<board.length; j++) {
+      for (let i = 0; i < board[j].length; i++) {
+        const nearbyBlocks = this.range(j - 1, j + 1)
             .flatMap(y =>
-              this.range(i-1, i+1)
-                  .map(x => {
-                    return {x, y}
-                  })
+                this.range(i - 1, i + 1)
+                    .map(x => {
+                      return {x, y}
+                    })
             )
             .filter(position => position.x >= 0 && position.y >= 0)
             .filter(position => position.x < board[j].length && position.y < board.length)
-            .filter(position => !(position.x == i && position.y == j));
+            .filter(position => !(position.x == i && position.y == j))
+            .map(position => this.board[position.y][position.x])
 
-        const nearbyMineCount = nearbyBlocks.filter(position => board[position.y][position.x]).length;
-        this.board[j][i] = new Block(i, j, board[j][i], nearbyBlocks, nearbyMineCount)
+        this.board[j][i].setNearbyBlocks(nearbyBlocks);
       }
     }
+
   }
 
   range(start, end) {

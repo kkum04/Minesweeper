@@ -1,6 +1,7 @@
 <template>
-  <b-button v-html="blockContent" variant="outline-success"
-            class="block"></b-button>
+  <b-button v-html="blockContent"
+            @click="onClick"
+            :class="blockStyle"></b-button>
 </template>
 
 <script>
@@ -9,29 +10,17 @@
     props: {
       block: Object
     },
+    methods: {
+      onClick() {
+        this.block.open();
+      }
+    },
     computed: {
       blockContent() {
-        if (this.block.isMine === true) {
-          return "<span class='mine'>O</span>";
-        }
-
-        if (this.block.nearbyMineCount === 0) {
-          return "";
-        }
-        else if (this.block.nearbyMineCount === 1) {
-          return `<span class="mine_one">${this.block.nearbyMineCount}</span>`;
-        } else if(this.block.nearbyMineCount === 2) {
-          return `<span class="mine_two">${this.block.nearbyMineCount}</span>`;
-        } else if(this.block.nearbyMineCount === 3) {
-          return `<span class="mine_three">${this.block.nearbyMineCount}</span>`;
-        } else if(this.block.nearbyMineCount === 4) {
-          return `<span class="mine_four">${this.block.nearbyMineCount}</span>`;
-        } else if(this.block.nearbyMineCount === 5) {
-          return `<span class="mine_five">${this.block.nearbyMineCount}</span>`;
-        }
-
-
-        return `<span class="mine_many">${this.block.nearbyMineCount}</span>`;;
+        return this.block.blockContent();
+      },
+      blockStyle() {
+        return this.block.blockStyle();
       }
     }
   }
@@ -69,24 +58,39 @@
     color: #000000;
   }
 
+
   .row:nth-child(odd) .block:nth-child(odd) {
-    background-color: #e5c29f;
+    background-color: #a2d149;
   }
 
   .row:nth-child(even) .block:nth-child(odd) {
-    background-color: #d7b899;
+    background-color: #aad751;
   }
 
   .row:nth-child(odd) .block:nth-child(even) {
-    background-color: #d7b899;
+    background-color: #aad751;
   }
 
   .row:nth-child(even) .block:nth-child(even) {
+    background-color: #a2d149;
+  }
+
+
+  .row:nth-child(odd) .block.open:nth-child(odd) {
     background-color: #e5c29f;
   }
 
-  /*.block:nth-child(even) {*/
-  /*  background-color: #d7b899;*/
-  /*}*/
+  .row:nth-child(even) .block.open:nth-child(odd) {
+    background-color: #d7b899;
+  }
+
+  .row:nth-child(odd) .block.open:nth-child(even) {
+    background-color: #d7b899;
+  }
+
+  .row:nth-child(even) .block.open:nth-child(even) {
+    background-color: #e5c29f;
+  }
+
 
 </style>
