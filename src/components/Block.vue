@@ -1,6 +1,7 @@
 <template>
   <b-button v-html="blockContent"
             @click="onClick"
+            @contextmenu.prevent="onRightClick"
             :class="blockStyle"></b-button>
 </template>
 
@@ -13,6 +14,9 @@
     methods: {
       onClick() {
         this.block.open();
+      },
+      onRightClick() {
+        this.block.flag();
       }
     },
     computed: {

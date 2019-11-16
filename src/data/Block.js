@@ -7,6 +7,7 @@ class Block {
     this.nearbyBlocks = [];
     this.nearbyMineCount = 0;
     this.isOpen = false;
+    this.isFlag = false;
   }
 
   setNearbyBlocks(nearbyBlocks) {
@@ -15,8 +16,9 @@ class Block {
   }
 
   open() {
-    this.isOpen = true;
+    if (this.isFlag === true) return;
 
+    this.isOpen = true;
     if (this.isMine === true) {
       this.board.gameover();
     }
@@ -25,14 +27,20 @@ class Block {
     }
   }
 
+  flag() {
+
+    if (this.isOpen === true) return;
+    this.isFlag = !this.isFlag;
+  }
+
   blockContent() {
     if (this.isOpen === false) return "";
 
     if (this.isMine === true) {
       return "<span class='mine'><img src='mine.ico' /></span>";
-    }
-
-    if (this.nearbyMineCount === 0) {
+    } else if(this.isFlag === true) {
+      return "<span class='mine'><img src='flag.png' /></span>";
+    } else if (this.nearbyMineCount === 0) {
       return "";
     }
     else if (this.nearbyMineCount === 1) {
